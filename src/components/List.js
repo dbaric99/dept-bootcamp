@@ -1,27 +1,50 @@
-let allColors=[];
+import React,{useState,useEffect,useCallback} from 'react';
+import PropTypes from 'prop-types';
+import ListItem from './ListItem';
 
-const List=(props)=>{
-  const hex='#'+props.currentColor;
+const List=(props)=>{ 
+  const[colors,setColors]=useState(props.propArray);
 
-  function addColor(color,array){
-    array.push(color);
-    let uniqueArray=[...new Set(array)];
-    return uniqueArray;
-  }
+  useEffect(()=>{
+    setColors(props.propArray);
+  },[props.propArray])
 
-  allColors=addColor(hex,allColors);
-  console.log(allColors);
+  const moveColorListItem=useCallback(
+    (dragIndex,hoverIndex)=>{
+      const dragItem=colors[dragIndex];
+      const hoverItem=colors[hoverIndex];
+
+      setColors(colors=>{
+        const updatedColors=[...colors];
+        updatedColors[dragIndex]=hoverItem;
+        updatedColors[hoverIndex]=dragItem;
+        return updatedColors;
+      })
+    },
+    [colors],
+  )
 
   return(
     <>
-      <h2>List of previous colors:</h2>
-      <ul>
-        {allColors.map(c=>(
-          <li style={{color:c}}>{c}</li>
+      <h2>List of previous colors:</h2>  
+      <div>
+        {colors.map((color,index)=>(
+          <ListItem
+            weight={color===props.propString ? 'bold' : 'normal'}
+            index={index}
+            text={color}
+            moveListItem={moveColorListItem}
+          />
         ))}
-      </ul>
+      </div>  
     </>
   );
 }
 
+List.propTypes={
+  propString: PropTypes.string,
+  propArray: PropTypes.array
+}
+
 export default List;
+
