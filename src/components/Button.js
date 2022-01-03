@@ -1,7 +1,5 @@
 import React, {useState,useEffect} from 'react';
-import List from './List';
-import {DndProvider} from 'react-dnd';
-import {HTML5Backend} from 'react-dnd-html5-backend';
+import TextInput from './TextInput';
 
 let allColors=[];
 
@@ -31,13 +29,10 @@ const Button=()=>{
 
   return(
     <>
-      <p>color: {color}</p>
       <button style={{color:`#${color}`}} onClick={fetchColor}>
         get random color
       </button>
-      <DndProvider backend={HTML5Backend}>
-        <List propString={color} propArray={allColors}/>
-      </DndProvider>      
+      <TextInput colorArray={allColors}/>     
     </>
   )
 }

@@ -2,12 +2,12 @@ import React,{useState,useEffect,useCallback} from 'react';
 import PropTypes from 'prop-types';
 import ListItem from './ListItem';
 
-const List=(props)=>{ 
-  const[colors,setColors]=useState(props.propArray);
+const List=({color,allColors})=>{ 
+  const[colors,setColors]=useState(allColors);
 
   useEffect(()=>{
-    setColors(props.propArray);
-  },[props.propArray])
+    setColors(allColors);
+  },[allColors])
 
   const moveColorListItem=useCallback(
     (dragIndex,hoverIndex)=>{
@@ -24,15 +24,18 @@ const List=(props)=>{
     [colors],
   )
 
+  console.log('From list '+color);
+  console.log(allColors);
+
   return(
     <>
       <h2>List of previous colors:</h2>  
       <div>
-        {colors.map((color,index)=>(
+        {colors.map((c,index)=>(
           <ListItem
-            weight={color===props.propString ? 'bold' : 'normal'}
+            weight={c===color ? 'bold' : 'normal'}
             index={index}
-            text={color}
+            text={c}
             moveListItem={moveColorListItem}
           />
         ))}
@@ -42,8 +45,8 @@ const List=(props)=>{
 }
 
 List.propTypes={
-  propString: PropTypes.string,
-  propArray: PropTypes.array
+  color: PropTypes.string,
+  allColors: PropTypes.array
 }
 
 export default List;
