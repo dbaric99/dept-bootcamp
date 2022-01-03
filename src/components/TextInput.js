@@ -13,6 +13,8 @@ const TextInput=({colorArray})=>{
 
   let colorFromInput='';
 
+
+  //checks if enter is clicked and if the input is a valid hex code and adds it to the colorArray
   function handleEnter(event){
     if(event.key==='Enter'){
       colorFromInput=event.target.value;
@@ -26,13 +28,14 @@ const TextInput=({colorArray})=>{
     }
   }
 
-  console.log('from TextInput: '+color);
+  //checks that all colors are unique and not null
+  let filtered=[...new Set(colorArray)].filter(c=>c!==undefined)
 
   return(
     <>
       <input placeholder="enter hex code" onKeyDown={handleEnter}/>
       <DndProvider backend={HTML5Backend}>
-        <List color={color} allColors={colorArray}/>
+        <List color={color} allColors={filtered}/>
       </DndProvider>
     </>
   )

@@ -10,10 +10,10 @@ const Button=()=>{
     if(oneColor!='#'){
       array.push(oneColor);
     }
-    let filteredArray=[...new Set(array)].filter(c=>c!==undefined);
-    return filteredArray;
+    return array;
   }
 
+  //asynchronous function that fetched random color from API
   const fetchColor=async()=>{
     let colorFormat='#';
     const response=await fetch(`https://www.colr.org/json/color/random?timestamp=${new Date().getTime()}`);
@@ -29,7 +29,7 @@ const Button=()=>{
 
   return(
     <>
-      <button style={{color:`#${color}`}} onClick={fetchColor}>
+      <button style={{color:color}} onClick={fetchColor}>
         get random color
       </button>
       <TextInput colorArray={allColors}/>     

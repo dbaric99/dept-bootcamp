@@ -4,11 +4,12 @@ import ListItem from './ListItem';
 
 const List=({color,allColors})=>{ 
   const[colors,setColors]=useState(allColors);
-
+  
   useEffect(()=>{
     setColors(allColors);
   },[allColors])
 
+  //the functions receives two indices and swaps their positions
   const moveColorListItem=useCallback(
     (dragIndex,hoverIndex)=>{
       const dragItem=colors[dragIndex];
@@ -24,9 +25,6 @@ const List=({color,allColors})=>{
     [colors],
   )
 
-  console.log('From list '+color);
-  console.log(allColors);
-
   return(
     <>
       <h2>List of previous colors:</h2>  
@@ -35,7 +33,7 @@ const List=({color,allColors})=>{
           <ListItem
             weight={c===color ? 'bold' : 'normal'}
             index={index}
-            text={c}
+            color={c}
             moveListItem={moveColorListItem}
           />
         ))}
